@@ -112,7 +112,7 @@ Level 5 검증 보고서 출력.
 기존 Report 최대 번호 `05` 확인 후 `06` 할당:
 
 - `Report/06_MagicSquare_UserJourney_Level1-5_Verification_Report.md`
-- `Prompting/06_MagicSquare_UserJourney_Level1-5_Transcript_Prompt.md` (본 파일)
+- `Prompt/06_MagicSquare_UserJourney_Level1-5_Transcript_Prompt.md` (본 파일)
 
 ---
 

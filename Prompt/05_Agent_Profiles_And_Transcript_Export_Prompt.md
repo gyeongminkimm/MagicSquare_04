@@ -111,7 +111,7 @@ UX/에러 메시지 계약(Report 규칙) 반영해 `ux-design-advisor.md` 생�
 보고서/기록/GitHub 관리를 위한 `backup-agent` 생성 요청  
 루틴:  
 [1] `Report/xx_*_Report.md`  
-[2] `Prompting/xx_*_Prompt.md`
+[2] `Prompt/xx_*_Prompt.md`
 
 ### Turn 24 - Assistant
 

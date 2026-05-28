@@ -34,7 +34,7 @@
 | 3 | Level 3 User Stories (Story 1~5, AC) | Boundary 1 + Domain 4, 테스트 가능 AC |
 | 4 | Level 4 Technical Scenarios | SC-DOM-SOL-001, SC-BND-VAL-001~003 |
 | 5 | Level 5 Scenario Verification | 적합성 7.4/10, 일부 수정 필요 판정 |
-| 6 | Report·Prompting Export | 본 문서, [`Prompting/06_...`](../Prompting/06_MagicSquare_UserJourney_Level1-5_Transcript_Prompt.md) |
+| 6 | Report·Prompt Export | 본 문서, [`Prompt/06_...`](../Prompt/06_MagicSquare_UserJourney_Level1-5_Transcript_Prompt.md) |
 
 **구현·테스트 코드 변경 없음** — Epic → Journey → Story → Scenario 명세·검증만 수행.
 
@@ -193,5 +193,5 @@ Epic (Level 1)
 
 | 유형 | 경로 |
 |------|------|
-| Transcript | [`Prompting/06_MagicSquare_UserJourney_Level1-5_Transcript_Prompt.md`](../Prompting/06_MagicSquare_UserJourney_Level1-5_Transcript_Prompt.md) |
+| Transcript | [`Prompt/06_MagicSquare_UserJourney_Level1-5_Transcript_Prompt.md`](../Prompt/06_MagicSquare_UserJourney_Level1-5_Transcript_Prompt.md) |
 | 설계 | [`02_MagicSquare_DualTrack_CleanArchitecture_TDD_Design.md`](02_MagicSquare_DualTrack_CleanArchitecture_TDD_Design.md) |

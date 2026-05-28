@@ -109,7 +109,7 @@
 기존 Report 최대 번호 `06` 확인 후 `07` 할당:
 
 - `Report/07_MagicSquare_PRD_And_Review_Report.md`
-- `Prompting/07_MagicSquare_PRD_And_Review_Transcript_Prompt.md` (본 파일)
+- `Prompt/07_MagicSquare_PRD_And_Review_Transcript_Prompt.md` (본 파일)
 
 ---
 

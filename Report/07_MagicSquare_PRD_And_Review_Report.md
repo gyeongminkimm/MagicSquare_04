@@ -33,7 +33,7 @@
 | 2 | 구현 전 PRD 전체 작성 (23섹션 구조, Dual-Track·Traceability 필수) | PRD Markdown 본문 (채팅 산출) |
 | 3 | `docs/PRD_MagicSquare.md` 파일 저장 | 저장 완료 |
 | 4 | PRD 7기준 검토 (수정 금지, 문제·개선안만) | 검토 보고 (채팅 산출) |
-| 5 | Report·Prompting Transcript Export | 본 문서, [`Prompting/07_...`](../Prompting/07_MagicSquare_PRD_And_Review_Transcript_Prompt.md) |
+| 5 | Report·Prompt Transcript Export | 본 문서, [`Prompt/07_...`](../Prompt/07_MagicSquare_PRD_And_Review_Transcript_Prompt.md) |
 
 **구현·테스트 코드 변경 없음** — 문서·PRD 명세만 수행.
 
@@ -47,7 +47,7 @@
 | 분석 보고 | 채팅 Turn 1 (미파일) | 본 Report §3에 요약 반영 |
 | 검토 보고 | 채팅 Turn 4 (미파일) | 본 Report §6~§8에 요약 반영 |
 | 세션 보고서 | `Report/07_MagicSquare_PRD_And_Review_Report.md` | 본 문서 |
-| Transcript | `Prompting/07_MagicSquare_PRD_And_Review_Transcript_Prompt.md` | 대화형 Export |
+| Transcript | `Prompt/07_MagicSquare_PRD_And_Review_Transcript_Prompt.md` | 대화형 Export |
 
 ---
 
@@ -207,4 +207,4 @@ PRD §22와 동일. 승인 게이트:
 
 ## 부록 — 대화 Export
 
-전체 User/Cursor 턴: [`Prompting/07_MagicSquare_PRD_And_Review_Transcript_Prompt.md`](../Prompting/07_MagicSquare_PRD_And_Review_Transcript_Prompt.md)
+전체 User/Cursor 턴: [`Prompt/07_MagicSquare_PRD_And_Review_Transcript_Prompt.md`](../Prompt/07_MagicSquare_PRD_And_Review_Transcript_Prompt.md)

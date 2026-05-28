@@ -108,12 +108,16 @@ MagicSquare_XX/
 │   ├── 02_MagicSquare_DualTrack_CleanArchitecture_TDD_Design.md
 │   ├── 03_MagicSquare_CursorRules_And_InitialImplementation_Report.md
 │   └── 04_MagicSquare_Modular_CursorRules_Report.md
+├── docs/
+│   └── PRD_MagicSquare.md
 ├── Prompt/
+│   ├── 01_MagicSquare_ProblemDefinition_Report_Prompt.md
 │   ├── 02_MagicSquare_DualTrack_TDD_Design_Prompt.md
 │   ├── 03_MagicSquare_CursorRules_UserEntity_Prompt.md
-│   └── 04_MagicSquare_Modular_CursorRules_Prompt.md
-└── Prompting/
-    └── 01_MagicSquare_ProblemDefinition_Report_Prompt.md
+│   ├── 04_MagicSquare_Modular_CursorRules_Prompt.md
+│   ├── 05_Agent_Profiles_And_Transcript_Export_Prompt.md
+│   ├── 06_MagicSquare_UserJourney_Level1-5_Transcript_Prompt.md
+│   └── 07_MagicSquare_PRD_And_Review_Transcript_Prompt.md
 ```
 
 ---

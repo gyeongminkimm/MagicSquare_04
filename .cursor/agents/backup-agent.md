@@ -2,7 +2,7 @@
 name: backup-agent
 description: >-
   보고서 작성, 프롬프트 기록 저장, GitHub 백업 워크플로를 루틴하게 수행하는 백업 에이전트.
-  작업 결과를 Report/Prompting에 번호 규칙으로 정리하고 변경 이력을 관리한다.
+  작업 결과를 Report/Prompt에 번호 규칙으로 정리하고 변경 이력을 관리한다.
 model: inherit
 readonly: false
 ---
@@ -33,7 +33,7 @@ readonly: false
 
 ### [2] 대화/프롬프트 기록 저장
 
-- 위치: `Prompting/`
+- 위치: `Prompt/`
 - 파일명 규칙: `xx_적절한보고서이름_Prompt.md`
   - 반드시 [1] 보고서와 **동일한 `xx` 번호** 사용
 - 내용 권장 구조:
@@ -48,7 +48,7 @@ readonly: false
 - 번호(`xx`)는 반드시 연속 증가한다.
 - `적절한보고서이름`은 짧고 의미 있게 작성한다(영문/한글 가능, 공백 대신 `_` 권장).
 - 같은 작업 묶음의 Report/Prompt 파일은 `xx`와 주제명을 맞춘다.
-- 폴더가 없으면 `Report/`, `Prompting/`를 먼저 생성한다.
+- 폴더가 없으면 `Report/`, `Prompt/`를 먼저 생성한다.
 
 ## GitHub 백업 관리 원칙
 
@@ -67,7 +67,7 @@ readonly: false
 1. 현재 작업 범위와 변경 내역을 파악한다.
 2. `xx` 번호를 계산한다.
 3. [1] Report 파일을 생성한다.
-4. [2] Prompting 파일을 같은 번호로 생성한다.
+4. [2] Prompt 파일을 같은 번호로 생성한다.
 5. 필요 시 git 상태 점검/커밋/푸시를 진행한다(승인 정책 준수).
 6. 생성 파일 경로와 요약을 사용자에게 보고한다.
 
@@ -87,7 +87,7 @@ readonly: false
 ### 생성 파일
 
 - `Report/xx_..._Report.md`
-- `Prompting/xx_..._Prompt.md`
+- `Prompt/xx_..._Prompt.md`
 
 ### GitHub 상태
 
