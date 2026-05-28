@@ -22,8 +22,10 @@
 | 항목 | 상태 |
 |------|------|
 | 문제 인식·정의 (STEP 1–5) | 완료 |
-| 상세 보고서 | [`Report/01_MagicSquare_ProblemDefinition_Report.md`](Report/01_MagicSquare_ProblemDefinition_Report.md) |
-| 구현·설계·테스트 코드 | 미착수 |
+| 문제 정의 보고서 | [`Report/01_MagicSquare_ProblemDefinition_Report.md`](Report/01_MagicSquare_ProblemDefinition_Report.md) |
+| Dual-Track TDD / Clean Architecture 설계 | 완료 — [`Report/02_MagicSquare_DualTrack_CleanArchitecture_TDD_Design.md`](Report/02_MagicSquare_DualTrack_CleanArchitecture_TDD_Design.md) |
+| Cursor Rules (모듈형 `.mdc`) | 완료 — [`Report/04_MagicSquare_Modular_CursorRules_Report.md`](Report/04_MagicSquare_Modular_CursorRules_Report.md) |
+| 구현·테스트 코드 | 미착수 |
 
 ---
 
@@ -79,16 +81,18 @@
 
 ---
 
-## 아직 결정하지 않은 것
+## 설계 단계에서 확정한 것 (02 보고서)
 
-다음은 구현·테스트 명세 전에 확정이 필요합니다.
+- **1순위 시나리오:** 2칸 퍼즐 완성 → `int[6]` 반환  
+- **검증 범위:** 행·열·대각선 포함, 마법합 34  
+- **입력 표현:** `int[4][4]`, `0`=빈칸(정확히 2개)  
+- **아키텍처:** Dual-Track (Domain ∥ UI Boundary) + Clean Architecture + Repository(메모리 1차)
 
-- [ ] **1순위 시나리오:** 자동 생성 / 입력 검증 / 퍼즐 채우기  
-- [ ] **검증 범위:** 행·열만 vs 대각선 포함 (현재 보고서는 대각선 포함 가정)  
-- [ ] **입력 표현:** 4×4 격자 vs 16개 일렬 등  
-- [ ] **1순위 책임:** 판별(validate) 우선 vs 배치 획득(generate) 우선  
+## 아직 구현 전인 것
 
-TDD 관점에서는 **판별 + 정·오 격자 사례**부터 시작하는 것이 권장됩니다 (보고서 STEP 4 참고).
+- Domain / UI / Data / Integration **테스트 코드**  
+- F3(UNSOLVABLE) 픽스처 숫자 고정  
+- File 기반 Repository (2차)
 
 ---
 
@@ -96,28 +100,39 @@ TDD 관점에서는 **판별 + 정·오 격자 사례**부터 시작하는 것�
 
 ```
 MagicSquare_XX/
-├── README.md                          ← 이 파일
+├── README.md
+├── .cursorrules                          # Rules 인덱스
+├── .cursor/rules/                        # magicsquare-*.mdc (5종)
 ├── Report/
-│   └── 01_MagicSquare_ProblemDefinition_Report.md   ← STEP 1–5 전체 보고서
-└── Prompting/                         ← (프롬프트·워크숍 기록, 있을 경우)
+│   ├── 01_MagicSquare_ProblemDefinition_Report.md
+│   ├── 02_MagicSquare_DualTrack_CleanArchitecture_TDD_Design.md
+│   ├── 03_MagicSquare_CursorRules_And_InitialImplementation_Report.md
+│   └── 04_MagicSquare_Modular_CursorRules_Report.md
+├── Prompt/
+│   ├── 02_MagicSquare_DualTrack_TDD_Design_Prompt.md
+│   ├── 03_MagicSquare_CursorRules_UserEntity_Prompt.md
+│   └── 04_MagicSquare_Modular_CursorRules_Prompt.md
+└── Prompting/
+    └── 01_MagicSquare_ProblemDefinition_Report_Prompt.md
 ```
 
 ---
 
 ## 문서
 
-- **전체 보고서:** [Report/01_MagicSquare_ProblemDefinition_Report.md](Report/01_MagicSquare_ProblemDefinition_Report.md)  
-  - STEP 1–5 전문, Why 분석, Invariant 목록, 종합 요약 포함  
-  - 구현 설계·코드·알고리즘은 **의도적으로 포함하지 않음**
+- **문제 정의:** [Report/01_...](Report/01_MagicSquare_ProblemDefinition_Report.md) — STEP 1–5, Invariant  
+- **TDD 설계:** [Report/02_...](Report/02_MagicSquare_DualTrack_CleanArchitecture_TDD_Design.md) — Domain/UI/Data/통합, RED 목록, Traceability  
+- **Cursor Rules (초기·User):** [Report/03_...](Report/03_MagicSquare_CursorRules_And_InitialImplementation_Report.md)  
+- **Cursor Rules (모듈형 `.mdc`):** [Report/04_...](Report/04_MagicSquare_Modular_CursorRules_Report.md)  
+- **프롬프트 Export:** [Prompt/02_...](Prompt/02_MagicSquare_DualTrack_TDD_Design_Prompt.md), [Prompt/03_...](Prompt/03_MagicSquare_CursorRules_UserEntity_Prompt.md), [Prompt/04_...](Prompt/04_MagicSquare_Modular_CursorRules_Prompt.md)
 
 ---
 
 ## 다음 단계 (권장 순서)
 
-1. 위 **미결정 항목** 확정  
-2. 테스트 목록(RED 후보)을 명세 수준으로 작성  
-3. 판별(유효성 검사)부터 TDD 사이클 시작  
-4. 필요 시 생성·퍼즐·표시 기능 추가  
+1. 02 보고서 **DOM-P0 / UI-P0** RED부터 Dual-Track TDD  
+2. F3(UNSOLVABLE) 픽스처 확정  
+3. INT-N-01 E2E 통과 후 Data·File Repository 확장  
 
 ---
 

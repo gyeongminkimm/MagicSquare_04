@@ -1,0 +1,84 @@
+---
+description: Dual-Track TDD phase 규칙, pytest·AAA·커버리지·테스트 레이아웃
+globs: tests/**/*.py
+alwaysApply: false
+---
+
+# Dual-Track TDD & 테스트
+
+## Dual-Track
+
+Domain 로직 트랙과 UI/Repository 경계 트랙을 병렬 진행, `Report/02` 계약으로 동기화.
+
+- Domain RED(`DOM-P0` 등)와 Boundary RED(`UI-P0` 등)를 설계서 ID로 추적
+- 한 트랙의 GREEN으로 다른 트랙 미구현을 대체하지 않음
+- 통합(`INT-*`)은 양 트랙 P0 GREEN 이후
+
+**금지**
+
+- Boundary 테스트 없이 Domain만으로 E2E 계약 완료 주장
+- Domain 로직을 Boundary 테스트에 복제해 중복 검증
+
+## RED phase
+
+실패하는 테스트로 요구사항·불변조건 고정.
+
+- 프로덕션 코드 수정 **전** 검증 테스트 작성
+- pytest 실행 후 **실패(RED)** 확인
+- 실패 원인: 미구현 또는 명세 기대값 미충족이 분명할 것
+- Report/02·테스트 ID(`DOM-*`, `UI-*`)·F1/F2 정확 반영
+- RED 확인 후에만 GREEN
+
+**금지**: RED 없이 `src/` 시작 · pass/skip/xfail로 RED 우회 · assert·픽스처 완화로 인위적 RED
+
+## GREEN phase
+
+RED를 통과시키는 **최소** 구현만.
+
+- 관련 테스트 모두 GREEN
+- GREEN 확인 후에만 refactor
+
+**금지**: 리팩터링·이름 변경·메서드 추출 · assert 완화·삭제·skip으로 GREEN · 범위 밖 기능 추가
+
+## REFACTOR phase
+
+동작·계약 불변, 구조만 개선.
+
+- 공개 API·입출력 계약 변경 없음
+- 동일 스위트 GREEN, 커버리지 리팩터 전 이상
+- 다음 RED는 red_phase부터
+
+**금지**: 테스트 삭제·완화 · F1/F2 기대값 변경(보고서 갱신 없이)
+
+## pytest 규칙
+
+- **패턴**: AAA (Arrange-Act-Assert)
+- **커버리지**: 최소 80% (`pytest-cov`)
+- **파일**: `test_` 접두사
+- **함수**: `test_{unit}_{condition}_{expected}`  
+  예: `test_magic_square_validator_complete_grid_returns_true`
+
+### 픽스처 scope
+
+| scope | 용도 |
+|-------|------|
+| function | 단일 테스트 격리, 에러 코드 |
+| module | F1/F2 공통 격자·solution_vector |
+| session | **금지** (I-8 재현성) |
+
+### 레이아웃
+
+- `tests/domain/` — DOM-*
+- `tests/boundary/` — UI-*, DATA-*
+- `tests/integration/` — INT-*
+
+### AAA
+
+- **Arrange**: 픽스처·격자·Mock
+- **Act**: 단일 공개 API 호출
+- **Assert**: 기대값·에러 코드·호출 횟수(MagicMock)
+
+### Boundary 테스트
+
+- Domain은 **mock**, 계약(UI-IN/OUT, `ERR_*`)만 검증
+- `ERR_*` message는 Report/02 표와 **바이트 일치**(UX-01)

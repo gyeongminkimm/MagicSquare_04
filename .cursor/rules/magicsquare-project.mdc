@@ -1,0 +1,90 @@
+---
+description: MagicSquare_XX 프로젝트 개요, 입출력 계약, 디렉터리 구조, AI 작업 절차
+alwaysApply: true
+---
+
+# MagicSquare_XX
+
+4×4 마방진 — 2칸 퍼즐 완성, 판별·생성 분리, 계약 기반 Dual-Track TDD.
+
+## 도메인
+
+| 항목 | 값 |
+|------|-----|
+| 격자 | 4×4 |
+| 값 범위 | 1–16 |
+| 마법합 | 34 |
+| 빈칸 | `0`, 2개 |
+
+## 입출력 계약
+
+- **입력**: `list[list[int]]` 4×4, `0`=빈칸, 빈칸 2개, 비0 중복 금지
+- **출력**: `list[int]` 길이 6 — `[r1,c1,n1,r2,c2,n2]`, 좌표 1-index
+
+## 참고 문서
+
+- `Report/01_MagicSquare_ProblemDefinition_Report.md`
+- `Report/02_MagicSquare_DualTrack_CleanArchitecture_TDD_Design.md`
+
+## 픽스처 (변경 시 보고서 갱신 필수)
+
+- **F1**: `[[16,0,2,13],[5,10,0,8],[9,6,7,12],[4,15,14,1]]` → `[1,2,3,2,3,11]`
+- **F2**: `[[16,3,2,13],[5,0,11,8],[9,6,0,12],[4,15,14,1]]` → `[2,2,10,3,3,7]`
+- **F3**: `UNSOLVABLE_PUZZLE` (INT-E-02, 구현 전 확정)
+
+## 디렉터리 구조
+
+```
+MagicSquare_XX/
+├── src/magicsquare/
+│   ├── entity/          # PuzzleGrid, VO, Validator, Solver
+│   ├── control/         # SolveTwoBlankPuzzle 등
+│   └── boundary/
+│       ├── ui/          # MagicSquareBoundary
+│       └── data/        # Repository 어댑터
+├── tests/
+│   ├── domain/          # DOM-*
+│   ├── boundary/        # UI-*, DATA-*
+│   ├── integration/     # INT-*
+│   └── conftest.py      # F1, F2
+├── Report/
+└── pyproject.toml
+```
+
+## AI 작업 절차
+
+### 코드 작성 전
+
+- Report/02·README의 테스트 ID·픽스처(F1/F2) 확인
+- `tests/domain` 또는 `tests/boundary`에 RED 테스트 존재 여부 확인
+- 작업 레이어(entity/control/boundary)와 의존 방향 확인
+- 현재 TDD phase(red/green/refactor) 파악
+
+### 코드 작성 중
+
+- ECB 의존: `boundary → control → entity`만
+- public API에 type hints·Google docstring
+- green_phase: 최소 구현만; Boundary 작업 시 Domain은 mock
+
+### 코드 작성 후
+
+- pytest 결과 보고(RED/GREEN 명시)
+- 커버리지 80% 미만 시 갭 보고(테스트 추가 제안, 약화 금지)
+
+### TDD/ECB 위반 시
+
+다음 중 하나면 경고 후 대안 제시:
+
+`⚠️ TDD/ECB 위반: [항목] — 해당 phase 규칙 및 forbidden 규칙 참고. 수정안: [대안]`
+
+- RED 없이 `src/` 변경
+- green_phase 중 리팩터링
+- assert·픽스처 완화·skip/xfail
+- `print()` 디버깅
+- entity가 boundary/control import
+
+### 금지 (AI)
+
+- 타입 힌트 없는 함수·메서드
+- F1/F2·ERR 메시지 임의 변경(보고서 갱신 없이)
+- 사용자 확인 없이 테스트 삭제·skip

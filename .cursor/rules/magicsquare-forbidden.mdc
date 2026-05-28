@@ -1,0 +1,40 @@
+---
+description: 금지 패턴 — print, 매직 넘버, 예외 삼킴, TDD 우회, ECB 역전
+alwaysApply: true
+---
+
+# 금지 패턴
+
+위반 시 대안을 따르고, TDD/ECB 위반이면 경고한다.
+
+## 출력·디버깅
+
+| 금지 | 이유 | 대안 |
+|------|------|------|
+| `print()` / `pprint` / 디버그 stdout | RED/GREEN 판단 흐림 | pytest assert; `logging.getLogger(__name__)` (테스트는 `caplog`) |
+
+## 도메인 상수
+
+| 금지 | 이유 | 대안 |
+|------|------|------|
+| 본문에 `34`, `4`, `16` 등 리터럴 | 단일 출처(I-4) 위반 | `MagicConstant`, `UPPER_SNAKE_CASE`, VO |
+
+## 예외 처리
+
+| 금지 | 이유 | 대안 |
+|------|------|------|
+| `except:` / `except Exception:` 삼킴 | UNSOLVABLE vs INVALID 구분 불가 | `except SpecificError as e: raise DomainError(...) from e` |
+
+## TDD
+
+| 금지 | 이유 | 대안 |
+|------|------|------|
+| RED 없이 `src/` 수정 | Dual-Track·RED 목록 무시 | `tests/` 실패 테스트 → pytest RED → 최소 구현 |
+| assert 완화·삭제·`skip`/`xfail`로 GREEN | 요구사항 미충족 위장 | 프로덕션 수정 또는 Report/02·픽스처 정정 |
+
+## ECB
+
+| 금지 | 이유 | 대안 |
+|------|------|------|
+| entity에서 boundary/control·`tests.boundary` import | 의존 역전 | DI·인터페이스는 boundary/control, entity는 순수 도메인 |
+| Boundary 테스트에서 Domain 실제 호출(통합 제외) | Contract-first 위반 | `unittest.mock` / `pytest-mock`으로 `solve` 등 mock |
