@@ -26,7 +26,8 @@
 | Dual-Track TDD / Clean Architecture 설계 | 완료 — [`Report/02_MagicSquare_DualTrack_CleanArchitecture_TDD_Design.md`](Report/02_MagicSquare_DualTrack_CleanArchitecture_TDD_Design.md) |
 | Cursor Rules (모듈형 `.mdc`) | 완료 — [`Report/04_MagicSquare_Modular_CursorRules_Report.md`](Report/04_MagicSquare_Modular_CursorRules_Report.md) |
 | AC-FR-01-01 Boundary RED/GREEN | 완료 — [`Report/08`](Report/08_MagicSquare_AC_FR_01_01_Testing_And_QA_Report.md), [`Report/11`](Report/11_MagicSquare_AC_FR_01_01_GREEN_Verification_Report.md) (29/29 PASS) |
-| Dual-Track RED 스켈레톤 (Report/09) | RED 작성 — Domain·U-IN-04~ 등 GREEN 미착수 |
+| PyQt6 Screen UI (`boundary.screen`) | **실행 가능** — G1 기본 격자 · UIBoundary 연동 |
+| Dual-Track RED 스켈레톤 (Report/09) | RED 작성 — U-IN-04~08 등 일부 GREEN 미착수 |
 
 ---
 
@@ -91,11 +92,50 @@
 
 ## 아직 구현 전·미완인 것
 
-- Track B Domain solver **실구현** (DEF-003: `resolve()` stub)  
-- U-IN-04~08, U-OUT, U-FLOW RED → GREEN (Report/09)  
+- U-IN-04~08 blank/range/duplicate Boundary 검증 GREEN  
 - F3(UNSOLVABLE) 픽스처 숫자 고정  
 - File 기반 Repository (2차)  
 - INT F1/F2 E2E
+
+---
+
+## GUI 실행 (PyQt6)
+
+### 1. 설치
+
+```powershell
+cd c:\DVV\MagicSquare_XX
+pip install -e ".[gui]"
+```
+
+### 2. 실행 (아래 중 하나)
+
+```powershell
+python run_gui.py
+python -m boundary.screen.app
+python -m boundary.screen
+python -m magicsquare.boundary.screen
+magicsquare-gui
+```
+
+진단 모드 (`grid=None` → `오류: Grid must be 4x4.`):
+
+```powershell
+python run_gui.py --verify
+python -m boundary.screen.app --verify
+```
+
+### 3. 사용법
+
+| UI | 동작 |
+|----|------|
+| 4×4 숫자 격자 | `QSpinBox` 0~16 (0=빈칸), **기본값 = G1** |
+| **풀기** | `UIBoundary.solve(grid)` 호출 |
+| 결과 라벨 | 성공: `결과 (r1, c1, n1, r2, c2, n2): …` / 실패: `오류: …` |
+
+G1 기본 격자에서 **풀기** → `2, 2, 10, 3, 3, 7` (F2 계약, Report/02).
+
+구현 위치: `src/magicsquare/boundary/screen/app.py` (Screen → UIBoundary만 호출).
 
 ---
 
@@ -104,7 +144,8 @@
 ```
 MagicSquare_XX/
 ├── README.md
-├── src/magicsquare/          # entity, control, boundary
+├── src/magicsquare/          # entity, control, boundary (+ boundary/screen PyQt)
+├── src/boundary/             # python -m boundary.screen 실행 alias
 ├── tests/                    # domain, boundary, entity (RED/GREEN)
 ├── Report/                   # 01~11 세션 보고서
 ├── docs/                     # PRD, test_plan, defect_list
@@ -121,6 +162,7 @@ MagicSquare_XX/
 - **Cursor Rules (초기·User):** [Report/03_...](Report/03_MagicSquare_CursorRules_And_InitialImplementation_Report.md)  
 - **Cursor Rules (모듈형 `.mdc`):** [Report/04_...](Report/04_MagicSquare_Modular_CursorRules_Report.md)  
 - **프롬프트 Export:** [Prompt/02_...](Prompt/02_MagicSquare_DualTrack_TDD_Design_Prompt.md), [Prompt/03_...](Prompt/03_MagicSquare_CursorRules_UserEntity_Prompt.md), [Prompt/04_...](Prompt/04_MagicSquare_Modular_CursorRules_Prompt.md)
+- **Dual-Track GREEN·PyQt Screen:** [Report/13](Report/13_MagicSquare_DualTrack_GREEN_And_PyQt_Screen_Report.md), [Prompt/13](Prompt/13_MagicSquare_DualTrack_GREEN_And_PyQt_Screen_Transcript_Prompt.md)
 - **테스트·QA (AC-FR-01-01):** [Report/08](Report/08_MagicSquare_AC_FR_01_01_Testing_And_QA_Report.md), [Report/11](Report/11_MagicSquare_AC_FR_01_01_GREEN_Verification_Report.md), [Report/12](Report/12_MagicSquare_AC_FR_01_01_TDD_Checklist_Report.md) (TDD 체크리스트·RED/GREEN 커밋 묶음), [docs/test_plan.md](docs/test_plan.md), [docs/defect_list.md](docs/defect_list.md)
 
 ---
