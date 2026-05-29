@@ -29,6 +29,7 @@
 | PyQt6 Screen UI (`boundary.screen`) | **실행 가능** — G1 기본 격자 · UIBoundary 연동 |
 | Dual-Track RED 스켈레톤 (Report/09) | RED 작성 — U-IN-04~08 등 일부 GREEN 미착수 |
 | ECB·리팩터 분석·계획 (Report/15) | **계획 완료** — `src/` REFACTOR **미착수** |
+| REFACTOR 프로그램 Phase 0 게이트 (Report/16) | **G-02만 PASS** — Wave 1 **착수 불가** |
 
 ---
 
@@ -103,7 +104,7 @@
 ## ECB 리팩터 분석·계획 (Report/15)
 
 > **상태:** 분석·계획만 반영 — **코드 리팩터링은 아직 하지 않음.**  
-> SSOT: [`Report/15_MagicSquare_ECB_Refactor_Analysis_And_Plan_Report.md`](Report/15_MagicSquare_ECB_Refactor_Analysis_And_Plan_Report.md), [`Prompt/15`](Prompt/15_MagicSquare_ECB_Refactor_Analysis_And_Plan_Transcript_Prompt.md)
+> SSOT: [`Report/15`](Report/15_MagicSquare_ECB_Refactor_Analysis_And_Plan_Report.md), [`Report/16`](Report/16_MagicSquare_REFACTOR_Program_Phase0_Gate_And_Roadmap_Report.md) (Phase 0 실측·Wave 로드맵), [`Prompt/15`](Prompt/15_MagicSquare_ECB_Refactor_Analysis_And_Plan_Transcript_Prompt.md), [`Prompt/16`](Prompt/16_MagicSquare_REFACTOR_Program_Phase0_Gate_And_Roadmap_Transcript_Prompt.md)
 
 ### 프롬프트 → 실제 파일 (ECB)
 
@@ -128,6 +129,22 @@
 2. `ui_boundary.py` — E006/E007 envelope 매핑, dead `_validator` 정리  
 3. `solve_partial_magic_square.py` — locate/find **중복 제거** (solver 단일 진입)  
 4. 이중 Boundary (`MagicSquareBoundary` vs `UIBoundary`) — P1에서 통합 검토  
+
+### REFACTOR 3유형 요약 (Report/15)
+
+| 유형 | 건수 | 핵심 |
+|------|------|------|
+| 1. 계약·검증 | 4 | E002–E007, resolver, GM 검증 위임 |
+| 2. 구조·ECB | 8 | 중복·dead·이중 API/SSOT·Screen·SRP |
+| 3. 테스트 | 3 | P0 GREEN → REFACTOR 후 정리 |
+
+**실행 순서:** 유형 3 → 1 → 2 (Step A → 계약 → 구조). 상세 항목(대상·문제·기법): Report/15 §7.
+
+#### REFACTOR 3유형 To-Do
+
+- [ ] **유형 3 — 테스트** (3건) — P0 GREEN → REFACTOR 후 정리  
+- [ ] **유형 1 — 계약·검증** (4건) — E002–E007, resolver, GM 검증 위임  
+- [ ] **유형 2 — 구조·ECB** (8건) — 중복·dead·이중 API/SSOT·Screen·SRP  
 
 ### 회귀 명령 (리팩터 후)
 
@@ -206,6 +223,7 @@ MagicSquare_XX/
 - **Dual-Track GREEN·PyQt Screen:** [Report/13](Report/13_MagicSquare_DualTrack_GREEN_And_PyQt_Screen_Report.md), [Prompt/13](Prompt/13_MagicSquare_DualTrack_GREEN_And_PyQt_Screen_Transcript_Prompt.md)
 - **Golden Master 회귀:** [Report/14](Report/14_MagicSquare_Golden_Master_Regression_Report.md), [Prompt/14](Prompt/14_MagicSquare_Golden_Master_Regression_Transcript_Prompt.md), [docs/golden_master_approval_design.md](docs/golden_master_approval_design.md)
 - **ECB·리팩터 분석·계획:** [Report/15](Report/15_MagicSquare_ECB_Refactor_Analysis_And_Plan_Report.md), [Prompt/15](Prompt/15_MagicSquare_ECB_Refactor_Analysis_And_Plan_Transcript_Prompt.md) — REFACTOR **미착수**
+- **REFACTOR 프로그램·Phase 0 게이트:** [Report/16](Report/16_MagicSquare_REFACTOR_Program_Phase0_Gate_And_Roadmap_Report.md), [Prompt/16](Prompt/16_MagicSquare_REFACTOR_Program_Phase0_Gate_And_Roadmap_Transcript_Prompt.md) — Wave 1 **착수 불가** (G-01·G-03·G-04 미충족)
 - **테스트·QA (AC-FR-01-01):** [Report/08](Report/08_MagicSquare_AC_FR_01_01_Testing_And_QA_Report.md), [Report/11](Report/11_MagicSquare_AC_FR_01_01_GREEN_Verification_Report.md), [Report/12](Report/12_MagicSquare_AC_FR_01_01_TDD_Checklist_Report.md) (TDD 체크리스트·RED/GREEN 커밋 묶음), [docs/test_plan.md](docs/test_plan.md), [docs/defect_list.md](docs/defect_list.md), [docs/golden_master_approval_design.md](docs/golden_master_approval_design.md), [docs/README.md](docs/README.md) (RED To-Do·Golden Master 체크리스트)
 
 ---
@@ -303,11 +321,13 @@ python -m pytest "tests/boundary/test_ac_fr_01_01_dimension_validation.py::TestM
 
 ## 다음 단계 (권장 순서)
 
-1. **Report/15 Step A** — U-IN-04~08·U-FLOW·U-OUT-02/03 테스트 GREEN (REFACTOR 게이트)  
-2. **Report/15 Step B** — P0 리팩터 (`InputValidator`, `ui_boundary`, `solve_partial` 중복 제거)  
-3. OQ-09-01 code SSOT 확정 → 이중 Boundary API 정리 (P1)  
-4. Track B **D-LOC~D-SOL** GREEN (F3 확정 후 D-SOL-03)  
-5. INT F1/F2 E2E → File Repository 확장  
+1. **Report/16 Phase 0** — `pytest tests/` GREEN + G-03·G-04 ([Report/16](Report/16_MagicSquare_REFACTOR_Program_Phase0_Gate_And_Roadmap_Report.md))  
+2. **Report/15 REFACTOR 3유형 To-Do** — 유형 3 → 1 → 2 ([§ REFACTOR 3유형](#refactor-3유형-요약-report15))  
+3. **Report/15 Step A** — U-IN-04~08·U-FLOW·U-OUT-02/03 테스트 GREEN (REFACTOR 게이트)  
+4. **Report/15 Step B** — P0 리팩터 (`InputValidator`, `ui_boundary`, `solve_partial` 중복 제거)  
+5. OQ-09-01 code SSOT 확정 → 이중 Boundary API 정리 (P1)  
+6. Track B **D-LOC~D-SOL** GREEN (F3 확정 후 D-SOL-03)  
+7. INT F1/F2 E2E → File Repository 확장  
 
 ---
 
