@@ -21,6 +21,9 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+markers = [
+    "golden_master: Golden Master / Approval regression (GM-TC-*)",
+]
 
 [tool.coverage.run]
 source = ["magicsquare"]

@@ -148,7 +148,7 @@ MagicSquare_XX/
 ├── src/boundary/             # python -m boundary.screen 실행 alias
 ├── tests/                    # domain, boundary, entity (RED/GREEN)
 ├── Report/                   # 01~11 세션 보고서
-├── docs/                     # PRD, test_plan, defect_list
+├── docs/                     # PRD, test_plan, defect_list, golden_master
 ├── Prompt/                   # Transcript Export
 └── .cursor/rules/            # magicsquare-*.mdc
 ```
@@ -163,7 +163,8 @@ MagicSquare_XX/
 - **Cursor Rules (모듈형 `.mdc`):** [Report/04_...](Report/04_MagicSquare_Modular_CursorRules_Report.md)  
 - **프롬프트 Export:** [Prompt/02_...](Prompt/02_MagicSquare_DualTrack_TDD_Design_Prompt.md), [Prompt/03_...](Prompt/03_MagicSquare_CursorRules_UserEntity_Prompt.md), [Prompt/04_...](Prompt/04_MagicSquare_Modular_CursorRules_Prompt.md)
 - **Dual-Track GREEN·PyQt Screen:** [Report/13](Report/13_MagicSquare_DualTrack_GREEN_And_PyQt_Screen_Report.md), [Prompt/13](Prompt/13_MagicSquare_DualTrack_GREEN_And_PyQt_Screen_Transcript_Prompt.md)
-- **테스트·QA (AC-FR-01-01):** [Report/08](Report/08_MagicSquare_AC_FR_01_01_Testing_And_QA_Report.md), [Report/11](Report/11_MagicSquare_AC_FR_01_01_GREEN_Verification_Report.md), [Report/12](Report/12_MagicSquare_AC_FR_01_01_TDD_Checklist_Report.md) (TDD 체크리스트·RED/GREEN 커밋 묶음), [docs/test_plan.md](docs/test_plan.md), [docs/defect_list.md](docs/defect_list.md)
+- **Golden Master 회귀:** [Report/14](Report/14_MagicSquare_Golden_Master_Regression_Report.md), [Prompt/14](Prompt/14_MagicSquare_Golden_Master_Regression_Transcript_Prompt.md), [docs/golden_master_approval_design.md](docs/golden_master_approval_design.md)
+- **테스트·QA (AC-FR-01-01):** [Report/08](Report/08_MagicSquare_AC_FR_01_01_Testing_And_QA_Report.md), [Report/11](Report/11_MagicSquare_AC_FR_01_01_GREEN_Verification_Report.md), [Report/12](Report/12_MagicSquare_AC_FR_01_01_TDD_Checklist_Report.md) (TDD 체크리스트·RED/GREEN 커밋 묶음), [docs/test_plan.md](docs/test_plan.md), [docs/defect_list.md](docs/defect_list.md), [docs/golden_master_approval_design.md](docs/golden_master_approval_design.md), [docs/README.md](docs/README.md) (RED To-Do·Golden Master 체크리스트)
 
 ---
 
