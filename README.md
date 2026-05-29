@@ -1,7 +1,7 @@
 # MagicSquare_XX
 
-4×4 마방진(Magic Square)을 다루는 학습·실습 프로젝트입니다.  
-현재 단계는 **구현 이전의 문제 인식·정의**(STEP 1–5)이며, 소스 코드는 아직 없습니다.
+4×4 마방진(Magic Square) **2칸 퍼즐 완성**을 Dual-Track TDD로 구현하는 프로젝트입니다.  
+문제 정의·설계(STEP 1–5, Report/02)는 완료되었고, **AC-FR-01-01 Boundary 구조 검증**은 GREEN 완료 상태입니다.
 
 ---
 
@@ -25,7 +25,8 @@
 | 문제 정의 보고서 | [`Report/01_MagicSquare_ProblemDefinition_Report.md`](Report/01_MagicSquare_ProblemDefinition_Report.md) |
 | Dual-Track TDD / Clean Architecture 설계 | 완료 — [`Report/02_MagicSquare_DualTrack_CleanArchitecture_TDD_Design.md`](Report/02_MagicSquare_DualTrack_CleanArchitecture_TDD_Design.md) |
 | Cursor Rules (모듈형 `.mdc`) | 완료 — [`Report/04_MagicSquare_Modular_CursorRules_Report.md`](Report/04_MagicSquare_Modular_CursorRules_Report.md) |
-| 구현·테스트 코드 | 미착수 |
+| AC-FR-01-01 Boundary RED/GREEN | 완료 — [`Report/08`](Report/08_MagicSquare_AC_FR_01_01_Testing_And_QA_Report.md), [`Report/11`](Report/11_MagicSquare_AC_FR_01_01_GREEN_Verification_Report.md) (29/29 PASS) |
+| Dual-Track RED 스켈레톤 (Report/09) | RED 작성 — Domain·U-IN-04~ 등 GREEN 미착수 |
 
 ---
 
@@ -88,11 +89,13 @@
 - **입력 표현:** `int[4][4]`, `0`=빈칸(정확히 2개)  
 - **아키텍처:** Dual-Track (Domain ∥ UI Boundary) + Clean Architecture + Repository(메모리 1차)
 
-## 아직 구현 전인 것
+## 아직 구현 전·미완인 것
 
-- Domain / UI / Data / Integration **테스트 코드**  
+- Track B Domain solver **실구현** (DEF-003: `resolve()` stub)  
+- U-IN-04~08, U-OUT, U-FLOW RED → GREEN (Report/09)  
 - F3(UNSOLVABLE) 픽스처 숫자 고정  
-- File 기반 Repository (2차)
+- File 기반 Repository (2차)  
+- INT F1/F2 E2E
 
 ---
 
@@ -101,26 +104,12 @@
 ```
 MagicSquare_XX/
 ├── README.md
-├── .cursorrules                          # Rules 인덱스
-├── .cursor/rules/                        # magicsquare-*.mdc (5종)
-├── Report/
-│   ├── 01_MagicSquare_ProblemDefinition_Report.md
-│   ├── 02_MagicSquare_DualTrack_CleanArchitecture_TDD_Design.md
-│   ├── 03_MagicSquare_CursorRules_And_InitialImplementation_Report.md
-│   ├── 04_MagicSquare_Modular_CursorRules_Report.md
-│   ├── 07_MagicSquare_PRD_And_Review_Report.md
-│   └── 08_MagicSquare_AC_FR_01_01_Testing_And_QA_Report.md
-├── docs/
-│   ├── PRD_MagicSquare.md
-│   └── test_plan.md
-├── Prompt/
-│   ├── 01_MagicSquare_ProblemDefinition_Report_Prompt.md
-│   ├── 02_MagicSquare_DualTrack_TDD_Design_Prompt.md
-│   ├── 03_MagicSquare_CursorRules_UserEntity_Prompt.md
-│   ├── 04_MagicSquare_Modular_CursorRules_Prompt.md
-│   ├── 05_Agent_Profiles_And_Transcript_Export_Prompt.md
-│   ├── 06_MagicSquare_UserJourney_Level1-5_Transcript_Prompt.md
-│   └── 07_MagicSquare_PRD_And_Review_Transcript_Prompt.md
+├── src/magicsquare/          # entity, control, boundary
+├── tests/                    # domain, boundary, entity (RED/GREEN)
+├── Report/                   # 01~11 세션 보고서
+├── docs/                     # PRD, test_plan, defect_list
+├── Prompt/                   # Transcript Export
+└── .cursor/rules/            # magicsquare-*.mdc
 ```
 
 ---
@@ -132,46 +121,106 @@ MagicSquare_XX/
 - **Cursor Rules (초기·User):** [Report/03_...](Report/03_MagicSquare_CursorRules_And_InitialImplementation_Report.md)  
 - **Cursor Rules (모듈형 `.mdc`):** [Report/04_...](Report/04_MagicSquare_Modular_CursorRules_Report.md)  
 - **프롬프트 Export:** [Prompt/02_...](Prompt/02_MagicSquare_DualTrack_TDD_Design_Prompt.md), [Prompt/03_...](Prompt/03_MagicSquare_CursorRules_UserEntity_Prompt.md), [Prompt/04_...](Prompt/04_MagicSquare_Modular_CursorRules_Prompt.md)
-- **테스트·QA (AC-FR-01-01):** [Report/08_...](Report/08_MagicSquare_AC_FR_01_01_Testing_And_QA_Report.md), [docs/test_plan.md](docs/test_plan.md), [defect_list.md](defect_list.md)
+- **테스트·QA (AC-FR-01-01):** [Report/08](Report/08_MagicSquare_AC_FR_01_01_Testing_And_QA_Report.md), [Report/11](Report/11_MagicSquare_AC_FR_01_01_GREEN_Verification_Report.md), [Report/12](Report/12_MagicSquare_AC_FR_01_01_TDD_Checklist_Report.md) (TDD 체크리스트·RED/GREEN 커밋 묶음), [docs/test_plan.md](docs/test_plan.md), [docs/defect_list.md](docs/defect_list.md)
 
 ---
 
-## RED 단계 To-Do 리스트
+## TDD 체크리스트 — AC-FR-01-01 (구조·차원 검증)
 
-> 이 체크리스트는 test_plan.md 기반으로 생성되었습니다.
-> 각 항목은 RED(실패 테스트 작성) 완료 시 체크합니다.
+> SSOT: [`tests/boundary/test_ac_fr_01_01_dimension_validation.py`](tests/boundary/test_ac_fr_01_01_dimension_validation.py), [`tests/boundary/conftest.py`](tests/boundary/conftest.py), [`docs/test_plan.md`](docs/test_plan.md)  
+> 계약: `grid=None` 등 구조 실패 → `code=INVALID_SIZE`, `message=Grid must be 4x4.`, `resolve()` **0회**  
+> **현재:** Report/11 기준 **29/29 GREEN** — 아래 GREEN 항목은 회귀·재현용; RED 커밋 묶음은 히스토리 분리 시 참고. 상세: [Report/12](Report/12_MagicSquare_AC_FR_01_01_TDD_Checklist_Report.md), [Prompt/12](Prompt/12_MagicSquare_AC_FR_01_01_TDD_Checklist_Transcript_Prompt.md).
 
-### Track A — UI / Boundary 테스트
-- [ ] TC-A-01: grid=None 입력 → 실패 결과 반환 (Happy Path of Failure)
-- [ ] TC-A-02: code가 정확히 "INVALID_SIZE" 문자열인지 검증
-- [ ] TC-A-03: message가 "Grid must be 4x4." 와 문자 단위 동일한지 검증
-- [ ] TC-A-04: grid=None 시 Domain 진입점 0회 호출 (mock/spy 검증)
-- [ ] TC-A-05: grid=[] 빈 리스트 → 실패 결과 반환
-- [ ] TC-A-06: grid=3×4 크기 불일치 → 실패 결과 반환
-- [ ] TC-A-07: 반환 객체 타입이 지정 실패 결과 구조체인지 검증
+### RED 커밋 묶음 (5 commits — 테스트만, `src/` 금지)
 
-### Track B — Domain / Logic 테스트
-- [ ] TC-B-01: resolve()가 None grid를 직접 받지 않음을 격리 검증
-- [ ] TC-B-02: Boundary가 None 분기를 처리 후 resolve() 미호출 확인
-- [ ] TC-B-03: resolve() mock이 호출됐을 경우 테스트 실패 처리
-- [ ] TC-B-04: AC-FR-01-02~05 범위의 케이스는 이 커밋에 포함하지 않음 확인
+각 커밋 후 `pytest`로 **의도적 FAIL** 또는 ImportError 확인.
 
-### 커버리지 목표
-- [ ] Domain Logic: 95%+ (pip install pytest-cov)
-- [ ] Boundary Layer: 85%+
-- [ ] 전체 TOTAL: 90%+
+- [x] **RED-1** — `conftest.py` + `TestFailureReturnOnNoneGrid` (5건, #001~005)
+- [x] **RED-2** — `TestBoundaryDimensionValues` (5건, #006~010)
+- [x] **RED-3** — `TestDomainResolverIsolation` (5건, #011~015)
+- [x] **RED-4** — `TestMessageExactMatch` (9 nodes, #016~024)
+- [x] **RED-5** — `TestScopeRestriction` (5건, #025~029) — `src/` 변경 없이 PASS 가능
 
-### 결함 목록 연결
-- [x] [`defect_list.md`](defect_list.md) 생성 및 발견 결함 기록
-- [ ] 모든 결함 수정 후 회귀 테스트 통과 확인 (Open: DEF-003, DEF-004, DEF-005, DEF-006)
+### 테스트 케이스 — 오름차순 (#001~029)
+
+| # | 체크 | 클래스 / 테스트 | BV·입력 |
+|---|------|-----------------|--------|
+| 001 | [x] | `TestFailureReturnOnNoneGrid::test_none_grid_returns_failure_not_success_list` | BV-01 `None` |
+| 002 | [x] | `…::test_none_grid_returns_invalid_size_code` | BV-01 |
+| 003 | [x] | `…::test_none_grid_returns_grid_must_be_4x4_message` | BV-01 |
+| 004 | [x] | `…::test_none_grid_returns_pydantic_failure_result_type` | BV-01 |
+| 005 | [x] | `…::test_none_grid_returns_identical_failure_on_repeat` | BV-01 / SP-08 |
+| 006 | [x] | `TestBoundaryDimensionValues::test_empty_list_returns_invalid_size_code` | BV-02 `[]` |
+| 007 | [x] | `…::test_four_empty_rows_returns_invalid_size_code` | BV-03 `[[]]*4` |
+| 008 | [x] | `…::test_three_by_four_returns_invalid_size_code` | BV-04 `GRID_3X4` |
+| 009 | [x] | `…::test_empty_list_returns_grid_must_be_4x4_message` | BV-02 |
+| 010 | [x] | `…::test_four_empty_rows_returns_grid_must_be_4x4_message` | BV-03 |
+| 011 | [x] | `TestDomainResolverIsolation::test_none_grid_resolve_not_called` | BV-01 |
+| 012 | [x] | `…::test_empty_list_resolve_not_called` | BV-02 |
+| 013 | [x] | `…::test_four_empty_rows_resolve_not_called` | BV-03 |
+| 014 | [x] | `…::test_three_by_four_resolve_not_called` | BV-04 |
+| 015 | [x] | `…::test_none_grid_resolve_call_count_zero` | BV-01 |
+| 016 | [x] | `TestMessageExactMatch::test_dimension_failure_message_exact_match_prd[none]` | BV-01 |
+| 017 | [x] | `…[empty_list]` | BV-02 |
+| 018 | [x] | `…[four_empty_rows]` | BV-03 |
+| 019 | [x] | `…[three_by_four]` | BV-04 |
+| 020 | [x] | `…[two_by_two]` | BV-07 2×2 |
+| 021 | [x] | `…::test_none_grid_message_no_extra_whitespace` | BV-01 |
+| 022 | [x] | `…::test_none_grid_message_terminal_period_exact` | BV-01 |
+| 023 | [x] | `…::test_none_grid_code_message_pair_consistency` | BV-01 |
+| 024 | [x] | `…::test_empty_list_message_matches_prd_not_null_wording` | BV-02 / SP-03 |
+| 025 | [x] | `TestScopeRestriction::test_scope_excludes_f1_valid_grid_literal` | 메타 |
+| 026 | [x] | `…::test_scope_excludes_f2_valid_grid_literal` | 메타 |
+| 027 | [x] | `…::test_scope_excludes_ac_fr_01_03_error_codes` | 메타 |
+| 028 | [x] | `…::test_scope_excludes_ac_fr_01_04_error_codes` | 메타 |
+| 029 | [x] | `…::test_scope_excludes_fr02_to_fr05_error_codes` | 메타 |
+
+> BV-05(4×3), BV-06(5×5)는 본 파일 RED에 없음 — 후속 AC 또는 Report/09 U-IN-02와 통합 시 추가.
+
+### GREEN 구현 묶음 (`src/magicsquare/boundary/`만)
+
+| 단계 | 체크 | 통과 # | 최소 구현 |
+|------|------|--------|-----------|
+| **G1** | [x] | 001~005, 011, 015, 016, 021~023 | `None` → `FailureResult`; validator 실패 시 resolver 미호출 |
+| **G2** | [x] | 006~010, 012~014, 017~019, 024 | `[]`, `[[]]*4`, 3×4 행·열 길이 검증 |
+| **G3** | [x] | 020 | 2×2 등 행·열 ≠ 4 분기 |
+| **G4** | [x] | (016~024 message) | 상수 1곳 — G1~G3와 동시 통과 가능 |
+| **G5** | [x] | 025~029 | 구현 없음 (Scope 메타) |
+
+**RED↔GREEN 1:1 커밋 예:** GREEN-1 ← RED-1, GREEN-2 ← RED-2, GREEN-3 ← RED-3 (message는 GREEN-4 생략 가능).
+
+### 회귀 명령 (PowerShell)
+
+```powershell
+cd c:\DVV\MagicSquare_XX
+python -m pytest tests/boundary/test_ac_fr_01_01_dimension_validation.py -v
+python -m pytest tests/boundary/test_ac_fr_01_01_dimension_validation.py::TestFailureReturnOnNoneGrid -v
+python -m pytest "tests/boundary/test_ac_fr_01_01_dimension_validation.py::TestMessageExactMatch::test_dimension_failure_message_exact_match_prd[two_by_two]" -v
+```
+
+### AC-FR-01-01 이후 — Dual-Track GREEN (Report/09)
+
+- [ ] **A-1** `test_u_in_validation.py` — U-IN-04~08 (빈칸·값·중복)
+- [ ] **A-2** `test_u_flow_execute_isolation.py` — U-FLOW-02
+- [ ] **A-3** `test_u_out_contract.py` — U-OUT-01~03 (F1/F2 mock)
+- [ ] **B-1** `test_d_loc.py` → **B-2** `test_d_mis.py` → **B-3** `test_d_val.py` → **B-4** `test_d_sol.py`
+- [ ] OQ-09-01: `E003` vs `INVALID_SIZE` code SSOT 확정 후 U-IN-01~02 정합
+
+### 커버리지·결함
+
+- [x] [`docs/defect_list.md`](docs/defect_list.md) 생성 (DEF-001, DEF-002 Closed)
+- [ ] Boundary validation **≥85%** (DEF-004 Open — 비리스트·jagged 미테스트)
+- [ ] Domain Logic **≥95%** (Track B GREEN 후)
+- [ ] 전체 TOTAL **≥90%**
+- [ ] Open 결함 해소 후 회귀 (DEF-003, DEF-004, DEF-005, DEF-006)
 
 ---
 
 ## 다음 단계 (권장 순서)
 
-1. 02 보고서 **DOM-P0 / UI-P0** RED부터 Dual-Track TDD  
-2. F3(UNSOLVABLE) 픽스처 확정  
-3. INT-N-01 E2E 통과 후 Data·File Repository 확장  
+1. OQ-09-01 code SSOT 확정 → Report/09 **U-IN-04~ / U-OUT** GREEN  
+2. Track B **D-LOC~D-SOL** GREEN (F3 확정 후 D-SOL-03)  
+3. INT F1/F2 E2E → File Repository 확장  
 
 ---
 
