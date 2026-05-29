@@ -28,6 +28,7 @@
 | AC-FR-01-01 Boundary RED/GREEN | 완료 — [`Report/08`](Report/08_MagicSquare_AC_FR_01_01_Testing_And_QA_Report.md), [`Report/11`](Report/11_MagicSquare_AC_FR_01_01_GREEN_Verification_Report.md) (29/29 PASS) |
 | PyQt6 Screen UI (`boundary.screen`) | **실행 가능** — G1 기본 격자 · UIBoundary 연동 |
 | Dual-Track RED 스켈레톤 (Report/09) | RED 작성 — U-IN-04~08 등 일부 GREEN 미착수 |
+| ECB·리팩터 분석·계획 (Report/15) | **계획 완료** — `src/` REFACTOR **미착수** |
 
 ---
 
@@ -99,6 +100,46 @@
 
 ---
 
+## ECB 리팩터 분석·계획 (Report/15)
+
+> **상태:** 분석·계획만 반영 — **코드 리팩터링은 아직 하지 않음.**  
+> SSOT: [`Report/15_MagicSquare_ECB_Refactor_Analysis_And_Plan_Report.md`](Report/15_MagicSquare_ECB_Refactor_Analysis_And_Plan_Report.md), [`Prompt/15`](Prompt/15_MagicSquare_ECB_Refactor_Analysis_And_Plan_Transcript_Prompt.md)
+
+### 프롬프트 → 실제 파일 (ECB)
+
+| 프롬프트 | 실제 경로 | 레이어 |
+|----------|-----------|--------|
+| `domain.py` | `src/magicsquare/control/solve_partial_magic_square.py` | Control |
+| `boundary.py` | `src/magicsquare/boundary/ui_boundary.py` | Boundary |
+| `gui/main_window` | `src/magicsquare/boundary/screen/app.py` | Screen |
+
+### REFACTOR 전 게이트 (Step A — 테스트 GREEN)
+
+| 우선 | 테스트 | 내용 |
+|------|--------|------|
+| P0 | `test_u_in_04_08_input_validation.py` | U-IN-04~08 (E002/E004/E005) |
+| P0 | `test_u_flow_execute_isolation.py` | U-FLOW-02 — `UIBoundary` + mock `resolve` 0회 |
+| P0 | `test_u_out_01_03_output_contract.py` | U-OUT-02/03 (`pytest.fail` → GREEN) |
+| 앵커 | `test_solve_partial_magic_square.py`, `test_ac_fr_01_01_dimension_validation.py` (29), Golden Master | 회귀 유지 |
+
+### P0 리팩터 대상 (계획만 — 미착수)
+
+1. `validation/input_validator.py` — FR-01 content 구현  
+2. `ui_boundary.py` — E006/E007 envelope 매핑, dead `_validator` 정리  
+3. `solve_partial_magic_square.py` — locate/find **중복 제거** (solver 단일 진입)  
+4. 이중 Boundary (`MagicSquareBoundary` vs `UIBoundary`) — P1에서 통합 검토  
+
+### 회귀 명령 (리팩터 후)
+
+```powershell
+cd c:\DVV\MagicSquare_XX
+python -m pytest tests/boundary/test_u_in_04_08_input_validation.py tests/boundary/test_u_flow_execute_isolation.py tests/boundary/test_u_out_01_03_output_contract.py tests/control/test_solve_partial_magic_square.py tests/boundary/test_ac_fr_01_01_dimension_validation.py tests/golden_master/test_golden_master_magic_square.py -v
+```
+
+상세 표·스멜·SRP: Report/15 §7–10.
+
+---
+
 ## GUI 실행 (PyQt6)
 
 ### 1. 설치
@@ -147,7 +188,7 @@ MagicSquare_XX/
 ├── src/magicsquare/          # entity, control, boundary (+ boundary/screen PyQt)
 ├── src/boundary/             # python -m boundary.screen 실행 alias
 ├── tests/                    # domain, boundary, entity (RED/GREEN)
-├── Report/                   # 01~11 세션 보고서
+├── Report/                   # 01~15 세션 보고서
 ├── docs/                     # PRD, test_plan, defect_list, golden_master
 ├── Prompt/                   # Transcript Export
 └── .cursor/rules/            # magicsquare-*.mdc
@@ -164,6 +205,7 @@ MagicSquare_XX/
 - **프롬프트 Export:** [Prompt/02_...](Prompt/02_MagicSquare_DualTrack_TDD_Design_Prompt.md), [Prompt/03_...](Prompt/03_MagicSquare_CursorRules_UserEntity_Prompt.md), [Prompt/04_...](Prompt/04_MagicSquare_Modular_CursorRules_Prompt.md)
 - **Dual-Track GREEN·PyQt Screen:** [Report/13](Report/13_MagicSquare_DualTrack_GREEN_And_PyQt_Screen_Report.md), [Prompt/13](Prompt/13_MagicSquare_DualTrack_GREEN_And_PyQt_Screen_Transcript_Prompt.md)
 - **Golden Master 회귀:** [Report/14](Report/14_MagicSquare_Golden_Master_Regression_Report.md), [Prompt/14](Prompt/14_MagicSquare_Golden_Master_Regression_Transcript_Prompt.md), [docs/golden_master_approval_design.md](docs/golden_master_approval_design.md)
+- **ECB·리팩터 분석·계획:** [Report/15](Report/15_MagicSquare_ECB_Refactor_Analysis_And_Plan_Report.md), [Prompt/15](Prompt/15_MagicSquare_ECB_Refactor_Analysis_And_Plan_Transcript_Prompt.md) — REFACTOR **미착수**
 - **테스트·QA (AC-FR-01-01):** [Report/08](Report/08_MagicSquare_AC_FR_01_01_Testing_And_QA_Report.md), [Report/11](Report/11_MagicSquare_AC_FR_01_01_GREEN_Verification_Report.md), [Report/12](Report/12_MagicSquare_AC_FR_01_01_TDD_Checklist_Report.md) (TDD 체크리스트·RED/GREEN 커밋 묶음), [docs/test_plan.md](docs/test_plan.md), [docs/defect_list.md](docs/defect_list.md), [docs/golden_master_approval_design.md](docs/golden_master_approval_design.md), [docs/README.md](docs/README.md) (RED To-Do·Golden Master 체크리스트)
 
 ---
@@ -261,9 +303,11 @@ python -m pytest "tests/boundary/test_ac_fr_01_01_dimension_validation.py::TestM
 
 ## 다음 단계 (권장 순서)
 
-1. OQ-09-01 code SSOT 확정 → Report/09 **U-IN-04~ / U-OUT** GREEN  
-2. Track B **D-LOC~D-SOL** GREEN (F3 확정 후 D-SOL-03)  
-3. INT F1/F2 E2E → File Repository 확장  
+1. **Report/15 Step A** — U-IN-04~08·U-FLOW·U-OUT-02/03 테스트 GREEN (REFACTOR 게이트)  
+2. **Report/15 Step B** — P0 리팩터 (`InputValidator`, `ui_boundary`, `solve_partial` 중복 제거)  
+3. OQ-09-01 code SSOT 확정 → 이중 Boundary API 정리 (P1)  
+4. Track B **D-LOC~D-SOL** GREEN (F3 확정 후 D-SOL-03)  
+5. INT F1/F2 E2E → File Repository 확장  
 
 ---
 
