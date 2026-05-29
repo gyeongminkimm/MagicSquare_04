@@ -1,0 +1,46 @@
+---
+description: ECB(Entity-Control-Boundary) 레이어 책임과 의존 방향
+globs: src/**/*.py
+alwaysApply: false
+---
+
+# ECB 아키텍처
+
+패턴: **ECB (Entity-Control-Boundary)**
+
+## 레이어 책임
+
+### Entity (`src/magicsquare/entity/`)
+
+- 도메인 데이터·불변조건·마방진 판정·퍼즐 해석
+- 예: `PuzzleGrid`, VO(`CellPosition`, `MagicConstant`, `SolutionVector`), `MagicSquareValidator`, `TwoBlankPuzzleSolver`
+- **금지**: UI·CLI·파일 I/O·에러 메시지 문구·외부 API 스키마
+
+### Control (`src/magicsquare/control/`)
+
+- 유스케이스 오케스트레이션·도메인 서비스 호출 순서
+- 예: `SolveTwoBlankPuzzle`
+- **금지**: 입출력 포맷 검증·`ERR_*` 메시지·Repository 직접 접근(경계에 위임)
+
+### Boundary (`src/magicsquare/boundary/`)
+
+- 외부 입출력·계약 검증·Domain↔외부 오류 매핑·영속화 어댑터
+- 예: `MagicSquareBoundary`, InMemory/File Repository
+- **금지**: 마방진 합·빈칸 스캔·해 탐색 알고리즘(entity/control 책임)
+
+## 의존 방향 (단방향)
+
+```
+boundary → control → entity
+```
+
+| 허용 | 금지 |
+|------|------|
+| boundary가 control·entity 호출 | entity가 boundary·control import |
+| control이 entity 호출 | control이 boundary import |
+| | entity가 tests/boundary 외부 계층 참조 |
+
+## Dual-Track (아키텍처 관점)
+
+- **Domain 트랙**: `tests/domain/` — DOM-* RED·GREEN
+- **Boundary 트랙**: `tests/boundary/` — Contract-first, Domain mock (UI-*, DATA-*)

@@ -1,0 +1,47 @@
+---
+description: Python 3.10+ PEP8, Black, Ruff, type hints, Google docstring, naming
+globs: "**/*.py"
+alwaysApply: false
+---
+
+# Python 코드 스타일
+
+- **Python**: 3.10+
+- **스타일**: PEP8 엄격
+- **포맷**: Black (줄 길이 88)
+- **린터**: Ruff (PEP8 호환)
+- **import**: isort 호환 — 표준 → 서드파티 → 로컬
+
+## 필수
+
+- 모든 함수 **파라미터·반환값**에 type hints
+- 모든 **public** 메서드에 Google 스타일 docstring
+
+## 네이밍
+
+| 대상 | 규칙 |
+|------|------|
+| 모듈·패키지 | snake_case |
+| 클래스 | PascalCase |
+| 함수·변수 | snake_case |
+| 상수 | UPPER_SNAKE_CASE |
+
+## 예시
+
+```python
+# ✅ GOOD
+def solve_two_blank_puzzle(grid: list[list[int]]) -> list[int]:
+    """Solve a 4x4 puzzle with two blanks.
+
+    Args:
+        grid: 4x4 grid with 0 for blanks.
+
+    Returns:
+        Solution vector [r1, c1, n1, r2, c2, n2].
+    """
+    ...
+
+# ❌ BAD — type hints·docstring 없음
+def solve_two_blank_puzzle(grid):
+    ...
+```
