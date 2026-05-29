@@ -6,10 +6,10 @@ build-backend = "setuptools.build_meta"
 name = "magicsquare"
 version = "0.1.0"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = ["pydantic>=2.0"]
 
 [project.optional-dependencies]
-dev = ["pytest>=7.4", "pytest-cov>=4.1"]
+dev = ["pytest>=7.4", "pytest-cov>=4.1", "pydantic>=2.0"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -20,3 +20,11 @@ pythonpath = ["src"]
 
 [tool.coverage.run]
 source = ["magicsquare"]
+omit = ["*/tests/*", "*/__pycache__/*"]
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true
